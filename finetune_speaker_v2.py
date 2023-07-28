@@ -13,6 +13,7 @@ import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.cuda.amp import autocast, GradScaler
 from tqdm import tqdm
+import bitsandbytes as bnb
 
 import librosa
 import logging
@@ -130,12 +131,12 @@ def run(rank, n_gpus, hps):
   # for p in net_d.parameters():
   #     p.requires_grad = False
   # net_g.emb_g.weight.requires_grad = True
-  optim_g = torch.optim.AdamW(
+  optim_g = bnb.optim.Adam8bit(
       net_g.parameters(),
       hps.train.learning_rate,
       betas=hps.train.betas,
       eps=hps.train.eps)
-  optim_d = torch.optim.AdamW(
+  optim_d = bnb.optim.Adam8bit(
       net_d.parameters(),
       hps.train.learning_rate,
       betas=hps.train.betas,

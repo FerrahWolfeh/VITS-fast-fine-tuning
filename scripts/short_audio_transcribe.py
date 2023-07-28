@@ -50,7 +50,7 @@ if __name__ == "__main__":
             'zh': "[ZH]",
         }
     assert (torch.cuda.is_available()), "Please enable GPU in order to run Whisper!"
-    model = whisper.load_model(args.whisper_size)
+    model = whisper.load_model(name = args.whisper_size, download_root="/mnt/Mass/Resources/Whisper")
     parent_dir = "./custom_character_voice/"
     speaker_names = list(os.walk(parent_dir))[0][1]
     speaker_annos = []

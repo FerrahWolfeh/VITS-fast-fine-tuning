@@ -32,7 +32,7 @@ if __name__ == "__main__":
     with open("./configs/finetune_speaker.json", 'r', encoding='utf-8') as f:
         hps = json.load(f)
     target_sr = hps['data']['sampling_rate']
-    model = whisper.load_model(args.whisper_size)
+    model = whisper.load_model(name = args.whisper_size, download_root="/mnt/Mass/Resources/Whisper")
     speaker_annos = []
     for file in filelist:
         print(f"transcribing {parent_dir + file}...\n")

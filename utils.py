@@ -293,7 +293,7 @@ def load_filepaths_and_text(filename, split="|"):
     return filepaths_and_text
 
 
-def str2bool(v):
+def str2bool(v: str) -> bool:
     if isinstance(v, bool):
         return v
     if v.lower() in ('yes', 'true', 't', 'y', '1'):
@@ -403,6 +403,13 @@ def get_logger(model_dir, filename="train.log"):
 
 
 class HParams():
+    model_dir: str
+    drop_speaker_embed: bool
+    max_epochs: int
+    cont: bool
+    train_with_pretrained_model: bool
+    preserved: int = 4
+
     def __init__(self, **kwargs):
         for k, v in kwargs.items():
             if type(v) == dict:
