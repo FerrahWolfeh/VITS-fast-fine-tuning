@@ -3,6 +3,7 @@ mkdir pretrained_models
 # download data for fine-tuning
 wget https://huggingface.co/datasets/Plachta/sampled_audio4ft/resolve/main/sampled_audio4ft_v2.zip
 unzip sampled_audio4ft_v2.zip
+rm sampled_audio4ft_v2.zip
 # create necessary directories
 mkdir video_data
 mkdir raw_audio
