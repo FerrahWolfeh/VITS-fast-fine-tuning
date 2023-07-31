@@ -21,13 +21,12 @@ logging.getLogger("httpx").setLevel(logging.WARNING)
 logging.getLogger("asyncio").setLevel(logging.WARNING)
 
 language_marks = {
-    "Japanese": "",
-    "日本語": "[JA]",
-    "简体中文": "[ZH]",
+    "Japanese": "[JA]",
+    "Chinese": "[ZH]",
     "English": "[EN]",
     "Mix": "",
 }
-lang = ['日本語', '简体中文', 'English', 'Mix']
+lang = ['Japanese', 'Chinese', 'English', 'Mix']
 def get_text(text, hps, is_symbol):
     text_norm = text_to_sequence(text, hps.symbols, [] if is_symbol else hps.data.text_cleaners)
     if hps.data.add_blank:
@@ -141,6 +140,6 @@ if __name__ == "__main__":
             btn = gr.Button("Convert!")
             btn.click(vc_fn, inputs=[source_speaker, target_speaker, record_audio, upload_audio],
                       outputs=[message_box, converted_audio])
-    webbrowser.open("http://127.0.0.1:7860")
+#    webbrowser.open("http://127.0.0.1:7860")
     app.launch(share=args.share)
 

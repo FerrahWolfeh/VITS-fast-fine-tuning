@@ -130,12 +130,12 @@ def run(rank, n_gpus, hps):
   # for p in net_d.parameters():
   #     p.requires_grad = False
   # net_g.emb_g.weight.requires_grad = True
-  optim_g = bnb.optim.Adam8bit(
+  optim_g = bnb.optim.AdamW(
       net_g.parameters(),
       hps.train.learning_rate,
       betas=hps.train.betas,
       eps=hps.train.eps)
-  optim_d = bnb.optim.Adam8bit(
+  optim_d = bnb.optim.AdamW(
       net_d.parameters(),
       hps.train.learning_rate,
       betas=hps.train.betas,
