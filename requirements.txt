@@ -22,6 +22,5 @@ indic_transliteration
 num_thai
 opencc
 demucs
-openai-whisper
+stable-ts
 gradio
-bitsandbytes
