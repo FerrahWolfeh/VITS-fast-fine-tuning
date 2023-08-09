@@ -2,6 +2,7 @@
 rm -r pretrained_models
 # download data for fine-tuning
 rm sampled_audio4ft_v2.zip
+rm -r sampled_audio4ft
 # create necessary directories
 rm -r video_data
 rm -r raw_audio
