@@ -9,4 +9,5 @@ rm -r raw_audio
 rm -r denoised_audio
 rm -r custom_character_voice
 rm -r segmented_character_voice
+rm -r OUTPUT_MODEL
 rm short_character_anno.txt long_character_anno.txt final_annotation_train.txt final_annotation_val.txt sampled_audio4ft.txt
