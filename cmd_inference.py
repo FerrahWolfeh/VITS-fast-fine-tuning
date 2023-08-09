@@ -32,9 +32,14 @@ language_marks = {
     "Mix": "",
 }
 
+language_to_espeak = {
+    "[JA]": "ja",
+    "[EN]": "en-us",
+    "[ZH]": "zh",
+}
 
-def get_text(text, hps, is_symbol):
-    text_norm = text_to_sequence(text, hps.symbols, [] if is_symbol else hps.data.text_cleaners)
+def get_text(text, hps, is_symbol, language):
+    text_norm = text_to_sequence(text, hps.symbols, language)
     if hps.data.add_blank:
         text_norm = commons.intersperse(text_norm, 0)
     text_norm = LongTensor(text_norm)
@@ -88,9 +93,9 @@ if __name__ == "__main__":
 
 
     if language is not None:
-        text = language_marks[language] + text + language_marks[language]
         speaker_id = speaker_ids[spk]
-        stn_tst = get_text(text, hps, False)
+        lang = language_to_espeak[language_marks[language]]
+        stn_tst = get_text(text, hps, lang)
         with no_grad():
             x_tst = stn_tst.unsqueeze(0).to(device)
             x_tst_lengths = LongTensor([stn_tst.size(0)]).to(device)

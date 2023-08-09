@@ -1,6 +1,7 @@
 """ from https://github.com/keithito/tacotron """
 from text import cleaners
 from text.symbols import symbols
+from phonemizer import phonemize
 
 
 # Mappings from symbol to numeric ID and vice versa:
@@ -8,7 +9,7 @@ _symbol_to_id = {s: i for i, s in enumerate(symbols)}
 _id_to_symbol = {i: s for i, s in enumerate(symbols)}
 
 
-def text_to_sequence(text, symbols, cleaner_names):
+def text_to_sequence(text, symbols, language: str):
   '''Converts a string of text to a sequence of IDs corresponding to the symbols in the text.
     Args:
       text: string to convert to a sequence
@@ -18,7 +19,7 @@ def text_to_sequence(text, symbols, cleaner_names):
   '''
   sequence = []
   symbol_to_id = {s: i for i, s in enumerate(symbols)}
-  clean_text = _clean_text(text, cleaner_names)
+  clean_text = phonemize(text, language, backend='espeak')
   print(clean_text)
   print(f" length:{len(clean_text)}")
   for symbol in clean_text:

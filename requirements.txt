@@ -24,3 +24,4 @@ opencc
 demucs
 stable-ts
 gradio
+phonemizer
