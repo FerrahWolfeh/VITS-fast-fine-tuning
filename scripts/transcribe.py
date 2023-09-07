@@ -105,7 +105,7 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    parent_dir = args.input
+    parent_dir = args.input_dir
 
     speaker_names = list(os.walk(parent_dir))[0][1]
     total_files = sum([len(files) for _, _, files in os.walk(parent_dir)])
@@ -136,27 +136,26 @@ if __name__ == "__main__":
             print(f"Working on file: {original_mp3}")
 
             decode_opts: dict[str, str] = dict()
+            try:
+                result = model.transcribe(
+                    original_mp3,
+                    vad=False,
+                    demucs=args.enable_demucs,
+                    language=args.language,
+                )
 
-            if args.language != None:
-                decode_opts.update({"language": args.language})
+                (
+                    result.split_by_punctuation([(".", " "), "。", "?"])  # type: ignore
+                    .split_by_gap(0.5)
+                    .merge_by_gap(0.15, max_words=3)
+                    .merge_by_punctuation([(",", " "), ", "])
+                    .split_by_punctuation([(".", " "), "。", "?"])
+                    .clamp_max(None, 10)
+                )
 
-            result = model.transcribe(
-                original_mp3,
-                vad=False,
-                demucs=args.enable_demucs,
-                decode_options=decode_opts,
-            )
-
-            (
-                result.split_by_punctuation([(".", " "), "。", "?"])  # type: ignore
-                .split_by_gap(0.5)
-                .merge_by_gap(0.15, max_words=3)
-                .merge_by_punctuation([(",", " "), ", "])
-                .split_by_punctuation([(".", " "), "。", "?"])
-                .clamp_max(None, 10)
-            )
-
-            flist = result.to_dict()["segments"]  # type: ignore
+                flist = result.to_dict()["segments"]  # type: ignore
+            except:
+                print(f"Failed to transcribe file: {original_mp3}")
 
             split_text_and_write_metadata(
                 original_mp3, flist, spk_dir, i, speaker, args.resample
